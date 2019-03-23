@@ -1,0 +1,23 @@
+use assignment1;
+
+delete from enrolment;
+delete from student;
+delete from course;
+
+insert into student(student_id, name, cnp, gr) values (1, "Andrei", 101, 3);
+insert into student(student_id, name, cnp, gr) values (2, "Ana", 102, 2);
+insert into student(student_id, name, cnp, gr) values (3, "Vlad", 103, 1);
+insert into student(student_id, name, cnp, gr) values (4, "Robert", 104, 5);
+insert into student(student_id, name, cnp, gr) values (5, "Liviu", 105, 4);
+insert into student(student_id, name, cnp, gr) values (6, "Andreea", 106, 3);
+insert into student(student_id, name, cnp, gr) values (7, "Laura", 107, 2);
+insert into student(student_id, name, cnp, gr) values (8, "Ana", 108, 1);
+insert into student(student_id, name, cnp, gr) values (9, "Ionut", 109, 5);
+insert into student(student_id, name, cnp, gr) values (10, "Ciprian", 110, 4);
+insert into student(student_id, name, cnp, gr) values (11, "Alexandra", 111, 3);
+
+insert into course (course_id, course_name, teacher_name) values (1, "Legislatie economica", "R. Cordos");
+insert into course (course_id, course_name, teacher_name) values (2, "Limba engleza I", "S. Munteanu");
+insert into course (course_id, course_name, teacher_name) values (3, "Limba engleza II", "S. Munteanu");
+insert into course (course_id, course_name, teacher_name) values (4, "Sport", "M. Dumitrescu");
+insert into course (course_id, course_name, teacher_name) values (5, "PRISM", "E. Todoran");
