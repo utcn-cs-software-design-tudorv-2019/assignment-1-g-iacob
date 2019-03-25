@@ -46,9 +46,14 @@ public class LoginInterface extends Application{
 			 
 		    @Override
 		    public void handle(ActionEvent e) {
-		    	// if valid login send user name
-		    	primaryStage.hide();
-		        new StudentInterface("username");
+		    	if (userTextField.getText().equals("admin")) {
+		    		primaryStage.hide();
+		    		new AdminInterface();
+		    	} else {
+		    		// if valid login send user name
+		    		primaryStage.hide();
+		        	new StudentInterface("username");
+		    	}
 		    }
 		});
 		
