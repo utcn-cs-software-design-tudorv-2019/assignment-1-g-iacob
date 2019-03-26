@@ -1,5 +1,7 @@
 package assignment1;
 
+import java.util.ArrayList;
+
 import javafx.application.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,6 +20,8 @@ import javafx.scene.text.*;
 public class AdminInterface {
 
 	public AdminInterface() {
+		OperationRepo repo = new OperationRepo();
+		
 		Stage secondStage = new Stage();
 		
 		BorderPane pane = new BorderPane();
@@ -74,7 +78,7 @@ public class AdminInterface {
 			 
 		    @Override
 		    public void handle(ActionEvent e) {
-		    	// TODO: send text fields to business layer
+		    	repo.insertStudent(nameCreateTextField.getText(), cnpCreateTextField.getText(), groupCreateTextField.getText());
 		    }
 		});
 		
@@ -104,11 +108,10 @@ public class AdminInterface {
 		    	
 		    	viewMenu.getColumns().addAll(viewID, viewName, viewCNP, viewGroup);
 		    	
-		    	// TODO: get these from business layer
-		    	Student test1 = new Student(1, "a", 1, 1);
-		    	Student test2 = new Student(2, "b", 1, 1);
-		    	
-		    	viewMenu.getItems().addAll(test1, test2);
+		    	ArrayList<Student> students = repo.getStudents();
+		    	for (Student student : students) {
+		    		viewMenu.getItems().add(student);
+		    	}
 		    	
 		    	pane.setCenter(viewMenu);
 		    }
@@ -127,7 +130,7 @@ public class AdminInterface {
 		TextField idUpdateTextField = new TextField();
 		menuUpdate.add(idUpdateTextField, 1, 1);
 		
-		menuUpdate.add(new Label("Name*:"), 0, 2);
+		menuUpdate.add(new Label("Name:"), 0, 2);
 
 		TextField nameUpdateTextField = new TextField();
 		menuUpdate.add(nameUpdateTextField, 1, 2);
@@ -151,7 +154,7 @@ public class AdminInterface {
 			 
 		    @Override
 		    public void handle(ActionEvent e) {
-		    	// TODO: send text fields to business layer
+		    	repo.updateStudent(idUpdateTextField.getText(), nameUpdateTextField.getText(), cnpUpdateTextField.getText(), groupUpdateTextField.getText());
 		    }
 		});
 		
@@ -182,7 +185,7 @@ public class AdminInterface {
 			 
 		    @Override
 		    public void handle(ActionEvent e) {
-		    	// TODO: send deleteTextField.getText() to business layer
+		    	repo.deleteStudent(deleteTextField.getText());
 		    }
 		});
 		
@@ -235,7 +238,8 @@ public class AdminInterface {
 			 
 		    @Override
 		    public void handle(ActionEvent e) {
-		    	// TODO: initDB from data layer (or business?)
+		    	pane.setCenter(new VBox());
+		    	repo.resetDB();
 		    }
 		});
 		

@@ -14,7 +14,9 @@ import javafx.scene.text.*;
 
 public class StudentInterface {
 
-	public StudentInterface(String name) {
+	public StudentInterface(Integer id) {
+		OperationRepo repo = new OperationRepo();
+		
 		Stage secondStage = new Stage();
 		
 		BorderPane pane = new BorderPane();
@@ -40,11 +42,24 @@ public class StudentInterface {
 		
 		// View self
 		
-		btnViewStudent.setOnAction(new EventHandler<ActionEvent>() {
+    	Student self = repo.getStudent(id);
+    	if (self == null)
+    		System.out.println("Null student");
+    	GridPane viewSelf = new GridPane();
+    	viewSelf.setAlignment(Pos.CENTER);
+    	viewSelf.setHgap(10);
+    	viewSelf.setVgap(10);
+    	viewSelf.setPadding(new Insets(25, 25, 25, 25));
+    	
+    	viewSelf.add(new Label("Name: " + self.name), 1, 1);
+    	viewSelf.add(new Label("CNP: " + self.cnp.toString()), 1, 2);
+    	viewSelf.add(new Label("Group: " + self.gr.toString()), 1, 3);
+		
+    	btnViewStudent.setOnAction(new EventHandler<ActionEvent>() {
 			 
 		    @Override
 		    public void handle(ActionEvent e) {
-		    	// TODO: get info from business
+		    	pane.setCenter(viewSelf);
 		    }
 		});
 		
@@ -78,7 +93,7 @@ public class StudentInterface {
 			 
 		    @Override
 		    public void handle(ActionEvent e) {
-		    	// TODO: send text fields to business layer
+		    	repo.updateStudent(id.toString(), nameUpdateTextField.getText(), cnpUpdateTextField.getText(), groupUpdateTextField.getText());
 		    }
 		});
 		
@@ -92,7 +107,7 @@ public class StudentInterface {
 		
 		// View Courses
 		
-		btnViewStudent.setOnAction(new EventHandler<ActionEvent>() {
+		btnViewCourses.setOnAction(new EventHandler<ActionEvent>() {
 			 
 		    @Override
 		    public void handle(ActionEvent e) {
@@ -102,7 +117,7 @@ public class StudentInterface {
 		
 		// View Grades
 		
-		btnViewStudent.setOnAction(new EventHandler<ActionEvent>() {
+		btnViewGrades.setOnAction(new EventHandler<ActionEvent>() {
 			 
 		    @Override
 		    public void handle(ActionEvent e) {

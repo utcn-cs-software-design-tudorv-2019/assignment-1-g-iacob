@@ -4,6 +4,19 @@ import java.util.Date;
 
 public class Course {
 	public Integer id;
-	public String course_name, teacher_name;
-	public Date exam_date;
+	public String courseName, teacherName;
+	public Date examDate;
+	
+	public Integer getId() {
+		return id;
+	}
+	public String getCourseName() {
+		return courseName;
+	}
+	public String getTeacherName() {
+		return teacherName;
+	}
+	public Date getExamDate() {
+		return examDate;
+	}
 }

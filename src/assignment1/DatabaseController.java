@@ -1,6 +1,7 @@
 package assignment1;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseController {
 	
@@ -58,6 +59,80 @@ public class DatabaseController {
 		}
 	}
 	
+	public void deleteStudent(int id) {
+		try {
+			pStat = con.prepareStatement("delete from student where student_id = ?;");
+			pStat.setInt(1, id);
+			pStat.execute();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+	}
+	
+	public void updateName(int id, String name) {
+		try {
+			pStat = con.prepareStatement("update student set name = ? where student_id = ?;");
+			pStat.setString(1, name);
+			pStat.setInt(2, id);
+			pStat.execute();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	public void updateCNP(int id, int cnp) {
+		try {
+			pStat = con.prepareStatement("update student set cnp = ? where student_id = ?;");
+			pStat.setInt(1, cnp);
+			pStat.setInt(2, id);
+			pStat.execute();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	public void updateGroup(int id, int gr) {
+		try {
+			pStat = con.prepareStatement("update student set gr = ? where student_id = ?;");
+			pStat.setInt(1, gr);
+			pStat.setInt(2, id);
+			pStat.execute();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	public ArrayList<Student> getStudents(){
+		ArrayList<Student> rtn = new ArrayList<Student>();
+		try {
+			stat = con.createStatement();
+			resSet = stat.executeQuery("select * from student;");
+			while (resSet.next()) {
+				rtn.add(new Student(resSet.getInt("student_id"), resSet.getString("name"),
+						resSet.getInt("cnp"), resSet.getInt("gr")));
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		
+		return rtn;
+	}
+	
+	public Student getStudent(Integer id) {
+		try {
+			stat = con.createStatement();
+			resSet = stat.executeQuery("select * from student where student_id = " + id.toString() + ";");
+			if (resSet.next())
+				return new Student(resSet.getString("name"), resSet.getInt("cnp"), resSet.getInt("gr"));
+			return null;
+		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
+	}
+	
 	public void initDB() {
 		try {
 			stat = con.createStatement();
@@ -72,7 +147,7 @@ public class DatabaseController {
 			stat.execute("insert into student(student_id, name, cnp, gr) values (5, \"Liviu\", 105, 4);");
 			stat.execute("insert into student(student_id, name, cnp, gr) values (6, \"Andreea\", 106, 3);");
 			stat.execute("insert into student(student_id, name, cnp, gr) values (7, \"Laura\", 107, 2);");
-			stat.execute("insert into student(student_id, name, cnp, gr) values (8, \"Ana\", 108, 1);");
+			stat.execute("insert into student(student_id, name, cnp, gr) values (8, \"Maria\", 108, 1);");
 			stat.execute("insert into student(student_id, name, cnp, gr) values (9, \"Ionut\", 109, 5);");
 			stat.execute("insert into student(student_id, name, cnp, gr) values (10, \"Ciprian\", 110, 4);");
 			stat.execute("insert into student(student_id, name, cnp, gr) values (11, \"Alexandra\", 111, 3);");
@@ -87,14 +162,6 @@ public class DatabaseController {
 			System.out.println(e);
 		}
 		
-	}
-	
-	public static void main(String args[]) {
-		DatabaseController controller = new DatabaseController();
-		//Student test = new Student("testApp");
-		//controller.insertStudent(test);
-		controller.initDB();
-		controller.close();
 	}
 }
 

@@ -50,9 +50,12 @@ public class LoginInterface extends Application{
 		    		primaryStage.hide();
 		    		new AdminInterface();
 		    	} else {
-		    		// if valid login send user name
-		    		primaryStage.hide();
-		        	new StudentInterface("username");
+		    		OperationRepo repo = new OperationRepo();
+		    		int rtn = repo.isValidLogin(userTextField.getText()); 
+		    		if (rtn != 0) {
+		    			primaryStage.hide();
+		    			new StudentInterface(rtn);
+		    		}
 		    	}
 		    }
 		});
