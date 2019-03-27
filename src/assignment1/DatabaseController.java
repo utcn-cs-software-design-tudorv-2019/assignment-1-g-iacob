@@ -59,6 +59,33 @@ public class DatabaseController {
 		}
 	}
 	
+	public void insertEnrolment(Integer studentID, Integer courseID, Integer grade) {
+		try {
+			pStat = con.prepareStatement("insert into enrolment (student_id, course_id, grade) values (?, ?, ?)");
+			
+			pStat.setInt(1, studentID);
+			pStat.setInt(2, courseID);
+			pStat.setInt(3, grade);
+			pStat.execute();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	public ArrayList<Enrolment> getEnrolments(Integer studentID){
+		ArrayList<Enrolment> enrolments = new ArrayList<Enrolment>();
+		try {
+			stat = con.createStatement();
+			resSet = stat.executeQuery("select course_name, grade from student join enrolment on student.student_id = enrolment.student_id join course on enrolment.course_id = course.course_id where student.student_id = " + studentID.toString() + ";");
+			while (resSet.next()) 
+				enrolments.add(new Enrolment(resSet.getString("course_name"), resSet.getInt("grade")));
+		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
+		return enrolments;
+	}
+	
 	public void deleteStudent(int id) {
 		try {
 			pStat = con.prepareStatement("delete from student where student_id = ?;");
@@ -132,6 +159,21 @@ public class DatabaseController {
 			return null;
 		}
 	}
+	
+	public ArrayList<Course> getCourses(){
+        ArrayList<Course> rtn = new ArrayList<Course>();
+        try {
+            stat = con.createStatement();
+            resSet = stat.executeQuery("select * from course;");
+            while (resSet.next()) {
+                rtn.add(new Course(resSet.getInt("course_id"), resSet.getString("course_name"),
+                        resSet.getString("teacher_name"), resSet.getDate("exam_date")));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return rtn;
+    }
 	
 	public void initDB() {
 		try {

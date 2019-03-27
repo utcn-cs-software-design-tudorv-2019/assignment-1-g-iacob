@@ -218,7 +218,18 @@ public class AdminInterface {
 			 
 		    @Override
 		    public void handle(ActionEvent e) {
-		    	// TODO: send reportTextField.getText() to business layer
+		    	int cnt = 1;
+		    	GridPane log = new GridPane();
+	    		log.setAlignment(Pos.CENTER);
+	    		log.setHgap(10);
+	    		log.setVgap(10);
+	    		log.setPadding(new Insets(25, 25, 25, 25));
+		    	for (String action : repo.generateLog(reportTextField.getText())) {
+		    		log.add(new Label(action), 1, cnt);
+		    		cnt++;
+		    	}
+		    	pane.setCenter(log);
+		    		
 		    }
 		});
 		

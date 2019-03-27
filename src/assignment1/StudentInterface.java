@@ -1,5 +1,7 @@
 package assignment1;
 
+import java.util.ArrayList;
+
 import javafx.application.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,6 +11,7 @@ import javafx.geometry.*;
 
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 
@@ -111,7 +114,24 @@ public class StudentInterface {
 			 
 		    @Override
 		    public void handle(ActionEvent e) {
-		    	// TODO: get info from business
+		    	TableView viewMenu = new TableView();
+                TableColumn viewID = new TableColumn("ID");
+                viewID.setCellValueFactory(new PropertyValueFactory<>("id"));
+                TableColumn viewCourseName = new TableColumn("Course Name");
+                viewCourseName.setCellValueFactory(new PropertyValueFactory<>("courseName"));
+                TableColumn viewTeacherName = new TableColumn("Teacher Name");
+                viewTeacherName.setCellValueFactory(new PropertyValueFactory<>("teacherName"));
+                TableColumn viewExamDate = new TableColumn("Exam Date");
+                viewExamDate.setCellValueFactory(new PropertyValueFactory<>("examDate"));
+               
+                viewMenu.getColumns().addAll(viewID, viewCourseName, viewTeacherName, viewExamDate);
+               
+                ArrayList<Course> courses = repo.getCourses();
+                for (Course course : courses) {
+                    viewMenu.getItems().add(course);
+                }
+               
+                pane.setCenter(viewMenu);
 		    }
 		});
 		
@@ -121,7 +141,20 @@ public class StudentInterface {
 			 
 		    @Override
 		    public void handle(ActionEvent e) {
-		    	// TODO: get info from business
+		    	TableView viewMenu = new TableView();
+                TableColumn viewCourseName = new TableColumn("Course Name");
+                viewCourseName.setCellValueFactory(new PropertyValueFactory<>("courseName"));
+                TableColumn viewGrade = new TableColumn("Grade");
+                viewGrade.setCellValueFactory(new PropertyValueFactory<>("grade"));
+               
+                viewMenu.getColumns().addAll(viewCourseName, viewGrade);
+               
+                ArrayList<Enrolment> enrolments = repo.getEnrolments(id);
+                for (Enrolment enrolment : enrolments) {
+                    viewMenu.getItems().add(enrolment);
+                }
+               
+                pane.setCenter(viewMenu);
 		    }
 		});
 		
@@ -144,7 +177,7 @@ public class StudentInterface {
 			 
 		    @Override
 		    public void handle(ActionEvent e) {
-		    	// TODO: send enrollTextField.getText() to business layer
+		    	repo.enrolStudent(id, enrollTextField.getText());
 		    }
 		});
 		

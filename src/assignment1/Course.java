@@ -7,6 +7,20 @@ public class Course {
 	public String courseName, teacherName;
 	public Date examDate;
 	
+	public Course(Integer id, String courseName, String teacherName){
+        this.id = id;
+        this.courseName = courseName;
+        this.teacherName = teacherName;
+        examDate = null;
+    }  
+   
+    public Course(Integer id, String courseName, String teacherName, Date examDate){
+        this.id = id;
+        this.courseName = courseName;
+        this.teacherName = teacherName;
+        this.examDate = examDate;
+    }
+	
 	public Integer getId() {
 		return id;
 	}
